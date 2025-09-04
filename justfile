@@ -54,6 +54,7 @@ start:
 test:
    @echo ">> running $0"
    -jq '.resources[] | select(.name=="accounting_db_root") | .instances[].attributes ' terraform.tfstate
+   -jq '.resources[] | select(.name=="accounting-postgres") | .instances[].attributes.postgresql ' terraform.tfstate
 
 [group('enterprise')]
 stop:
