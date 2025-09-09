@@ -62,7 +62,10 @@ resource "vault_kv_secret_v2" "accounting_db_root" {
 
 # create an ephemeral vault_kv_secret_v2 resource
 # ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
-# ....
+#   namespace = 
+#   mount     = 
+#   mount_id  = 
+#   name      = 
 # }
 
 # mount a database secrets engine at the path "postgres"
