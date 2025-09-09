@@ -34,7 +34,8 @@ resource "vault_database_secret_backend_connection" "accounting-postgres" {
     connection_url          = "postgresql://{{username}}:{{password}}@localhost:5432/postgres?sslmode=disable"
     password_authentication = ""
     username                = "postgres"
-   #  ...
-    password            = tostring(vault_kv_secret_v2.accounting_db_root.data.password)
+    password_wo             = tostring(ephemeral.vault_kv_secret_v2.accounting_db_secret.data.password)
+    password_wo_version = 1
+    # password            = tostring(vault_kv_secret_v2.accounting_db_root.data.password)
   }
 }

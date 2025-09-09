@@ -1,6 +1,45 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
+# #------------------------------------------------------------------------------
+# # Create namespaces: finance, and engineering
+# #------------------------------------------------------------------------------
+# resource "vault_namespace" "finance" {
+#   path = "finance"
+# }
+
+# resource "vault_namespace" "engineering" {
+#   path = "engineering"
+# }
+
+#---------------------------------------------------------------
+# Create nested namespaces
+#   education has childnamespace, 'training'
+#       training has childnamespace, 'secure'
+#           secure has childnamespace, 'vault_cloud' and 'boundary'
+#---------------------------------------------------------------
+# resource "vault_namespace" "education" {
+#   path = "education"
+# }
+
+
+# # Create a childnamespace, 'training' under 'education'
+# resource "vault_namespace" "training" {
+#   namespace = vault_namespace.education.path
+#   path      = "training"
+# }
+
+# Create a childnamespace, 'vault_cloud' and 'boundary' under 'education/training'
+# resource "vault_namespace" "vault_cloud" {
+#   namespace = vault_namespace.training.path_fq
+#   path      = "vault_cloud"
+# }
+
+# # Create 'education/training/boundary' namespace
+# resource "vault_namespace" "boundary" {
+#   namespace = vault_namespace.training.path_fq
+#   path      = "boundary"
+# }
 
 # mount a database secrets engine at the path "postgres"
 resource "vault_mount" "db" {
@@ -56,14 +95,22 @@ resource "vault_kv_secret_v2" "accounting_db_root" {
   namespace = vault_namespace.accounting.path
   mount     = vault_mount.accounting-kvv2.path
   name      = "pgx-root"
-   data_json = jsonencode({"password" = "accounting-admin-password"})
-   # ...
+   # data_json = jsonencode({"password" = "accounting-admin-password"})
+   data_json_wo = jsonencode(
+      {
+        password = "accounting-admin-password"
+      }
+   )
+   data_json_wo_version = 1
 }
 
 # create an ephemeral vault_kv_secret_v2 resource
-# ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
-# ....
-# }
+ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
+  namespace = vault_namespace.accounting.path
+  mount     = vault_mount.accounting-kvv2.path
+  mount_id  = vault_mount.accounting-kvv2.id
+  name      = vault_kv_secret_v2.accounting_db_root.name
+}
 
 # mount a database secrets engine at the path "postgres"
 resource "vault_mount" "account_db" {
