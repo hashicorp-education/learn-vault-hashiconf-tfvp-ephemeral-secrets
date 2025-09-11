@@ -5,7 +5,7 @@
 
 # create secrets engine
 # create a kv v2 secrets engine in the accounting namespace
-resource "vault_mount" "accounting-kvv2" {
+resource "vault_mount" "accounting_kvv2" {
 #   namespace = 
   path      = "kvv2"
   type      = "kv"
