@@ -15,13 +15,13 @@ resource "vault_mount" "accounting-kvv2" {
 # kv v2 secrets in kvv2 in the accounting namespace
 resource "vault_kv_secret_v2" "accounting_db_root" {
 #   namespace = 
-  mount     = vault_mount.accounting-kvv2.path
+  mount     = vault_mount.accounting_kvv2.path
   name      = "pgx-root"
    data_json = jsonencode({"password" = "accounting-admin-password"})
    # ...
 }
 
-# create an ephemeral vault_kv_secret_v2 resource
+### create an ephemeral vault_kv_secret_v2 resource
 # ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
 #   namespace = 
 #   mount     = 
