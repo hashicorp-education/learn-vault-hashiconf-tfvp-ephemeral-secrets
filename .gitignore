@@ -28,3 +28,4 @@ out/
 nohup.out
 env/
 **/vault.log
+enterprise/tf.plan.json

@@ -13,33 +13,6 @@ resource "vault_namespace" "accounting" {
   path = "accounting"
 }
 
-# create new admin policy for accounting
-resource "vault_policy" "accounting_policy" {
-  name   = "admins"
-  policy = file("policies/admin-policy.hcl")
-}
-
-# create new admin policy for accounting
-resource "vault_policy" "accounting_app_policy" {
-  name   = "app"
-  policy = file("policies/accounting-app-policy.hcl")
-}
-
-resource "vault_auth_backend" "accounting_approle" {
-  depends_on = [vault_namespace.accounting]
-  namespace  = vault_namespace.accounting.path_fq
-  type       = "approle"
-}
-
-# Create a role named, "test-role"
-resource "vault_approle_auth_backend_role" "app-role" {
-  depends_on     = [vault_auth_backend.accounting_approle, vault_policy.accounting_app_policy]
-  backend        = vault_auth_backend.accounting_approle.path
-  namespace      = vault_namespace.accounting.path_fq
-  role_name      = "test-role"
-  token_policies = ["default", "app"]
-}
-
 # create secrets engine
 # create a kv v2 secrets engine in the accounting namespace
 resource "vault_mount" "accounting-kvv2" {
@@ -67,10 +40,3 @@ resource "vault_kv_secret_v2" "accounting_db_root" {
 #   mount_id  = 
 #   name      = 
 # }
-
-# mount a database secrets engine at the path "postgres"
-resource "vault_mount" "account_db" {
-  namespace = vault_namespace.accounting.path
-  path      = "postgres"
-  type      = "database"
-}
