@@ -41,11 +41,7 @@
 #   path      = "boundary"
 # }
 
-# mount a database secrets engine at the path "postgres"
-resource "vault_mount" "db" {
-  path = "postgres"
-  type = "database"
-}
+
 
 # create an accounting namespace
 resource "vault_namespace" "accounting" {

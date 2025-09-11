@@ -21,6 +21,12 @@ resource "time_sleep" "wait_7_seconds" {
   create_duration = "7s"
 }
 
+# mount a database secrets engine at the path "postgres"
+resource "vault_mount" "db" {
+  path = "postgres"
+  type = "database"
+}
+
 # create a database role for the postgres database with a
 # PostgreSQL Configuration option that uses the password_wo
 # to set the password
