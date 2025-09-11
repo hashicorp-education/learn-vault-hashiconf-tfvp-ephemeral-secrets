@@ -12,7 +12,6 @@ resource "vault_mount" "accounting-kvv2" {
   options   = { version = "2" }
 }
 
-# create wo secret
 # kv v2 secrets in kvv2 in the accounting namespace
 resource "vault_kv_secret_v2" "accounting_db_root" {
 #   namespace = 

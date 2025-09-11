@@ -23,6 +23,7 @@ resource "time_sleep" "wait_7_seconds" {
 
 # mount a database secrets engine at the path "postgres"
 resource "vault_mount" "db" {
+  namespace = vault_namespace.accounting.path
   path = "postgres"
   type = "database"
 }
@@ -32,6 +33,7 @@ resource "vault_mount" "db" {
 # to set the password
 resource "vault_database_secret_backend_connection" "accounting-postgres" {
   depends_on    = [time_sleep.wait_7_seconds]
+  namespace = vault_namespace.accounting.path
   backend       = vault_mount.db.path
   name          = docker_container.postgres.name
   allowed_roles = ["*"]

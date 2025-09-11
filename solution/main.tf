@@ -100,7 +100,7 @@ resource "vault_kv_secret_v2" "accounting_db_root" {
    data_json_wo_version = 1
 }
 
-# create an ephemeral vault_kv_secret_v2 resource
+## create an ephemeral vault_kv_secret_v2 resource
 ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
   namespace = vault_namespace.accounting.path
   mount     = vault_mount.accounting-kvv2.path
@@ -109,8 +109,8 @@ ephemeral "vault_kv_secret_v2" "accounting_db_secret" {
 }
 
 # mount a database secrets engine at the path "postgres"
-resource "vault_mount" "account_db" {
-  namespace = vault_namespace.accounting.path
-  path      = "postgres"
-  type      = "database"
-}
+# resource "vault_mount" "account_db" {
+#   namespace = vault_namespace.accounting.path
+#   path      = "postgres"
+#   type      = "database"
+# }
