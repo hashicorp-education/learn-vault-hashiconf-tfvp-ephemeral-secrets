@@ -1,0 +1,50 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
+# Manage namespaces
+path "sys/namespaces/*" {
+   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Manage policies
+path "sys/policies/acl/*" {
+   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# List policies
+path "sys/policies/acl" {
+   capabilities = ["list"]
+}
+
+# Enable and manage secrets engines
+path "sys/mounts/*" {
+   capabilities = ["create", "read", "update", "delete", "list"]
+}
+
+# List available secrets engines
+path "sys/mounts" {
+  capabilities = [ "read" ]
+}
+
+# Create and manage entities and groups
+path "identity/*" {
+   capabilities = ["create", "read", "update", "delete", "list"]
+}
+
+# Manage tokens
+path "auth/token/*" {
+   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Manage secrets at 'edu-secret'
+path "accounting_kvv2/*" {
+   capabilities = ["create", "read", "update", "delete", "list"]
+}
+
+# Manage secrets at 'edu-secret'
+path "db/*" {
+   capabilities = ["create", "read", "update", "delete", "list"]
+}
