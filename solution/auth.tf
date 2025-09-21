@@ -4,54 +4,44 @@
 #--------------------------------
 # Enable userpass auth method
 #--------------------------------
-resource "vault_auth_backend" "userpass" {
-  type = "userpass"
+resource "vault_auth_backend" "acc-userpass" {
+   namespace = vault_namespace.accounting.path
+   type = "userpass"
 }
 
-# Create a user named, "student"
-resource "vault_generic_endpoint" "student" {
-  depends_on           = [vault_auth_backend.userpass]
-  path                 = "auth/userpass/users/student"
+# Create a user named, "bob"
+resource "vault_generic_endpoint" "acc-bob" {
+  namespace = vault_namespace.accounting.path
+  depends_on           = [vault_auth_backend.acc-userpass]
+  path                 = "auth/userpass/users/bob"
   ignore_absent_fields = true
 
   data_json = <<EOT
 {
-  "policies": ["app", "admins"],
-  "password": "changeme"
+  "name": "Bob Smith",
+  "policies": ["accounting-admin"],
+  "password": "training"
 }
 EOT
 }
 
+resource "vault_auth_backend" "edu-userpass" {
+   namespace = vault_namespace.education.path
+   type = "userpass"
+}
 
-# Create a user named, "student"
-# resource "vault_generic_endpoint" "student" {
-#   depends_on           = [vault_auth_backend.userpass]
-#   path                 = "auth/userpass/users/student"
-#   ignore_absent_fields = true
+# Create a user named, "bob"
+resource "vault_generic_endpoint" "edu-bob" {
+  namespace = vault_namespace.education.path
+  depends_on           = [vault_auth_backend.edu-userpass]
+  path                 = "auth/userpass/users/bob"
+  ignore_absent_fields = true
 
-#   data_json = <<EOT
-# {
-#   "policies": ["fpe-client", "admins"],
-#   "password": "changeme"
-# }
-# EOT
-# }
-
-#--------------------------------------------------------------------
-# Enable approle auth method in the 'education/training' namespace
-#--------------------------------------------------------------------
-# resource "vault_auth_backend" "approle" {
-#   depends_on = [vault_namespace.training]
-#   namespace  = vault_namespace.training.path_fq
-#   type       = "approle"
-# }
-
-# Create a role named, "test-role"
-# resource "vault_approle_auth_backend_role" "test-role" {
-#   depends_on     = [vault_auth_backend.approle]
-#   backend        = vault_auth_backend.approle.path
-#   namespace      = vault_namespace.training.path_fq
-#   role_name      = "test-role"
-#   token_policies = ["default", "admins"]
-# }
-
+  data_json = <<EOT
+{
+  "name": "Bob Smith",
+  "policies": ["accounting-admin"],
+  "password": "training"
+}
+EOT
+}

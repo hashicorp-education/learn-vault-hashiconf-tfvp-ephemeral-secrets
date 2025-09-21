@@ -1,9 +1,3 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
-
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
-
 # Manage namespaces
 path "sys/namespaces/*" {
    capabilities = ["create", "read", "update", "delete", "list", "sudo"]
@@ -41,10 +35,5 @@ path "auth/token/*" {
 
 # Manage secrets at 'edu-secret'
 path "kvv2/*" {
-   capabilities = ["create", "read", "update", "delete", "list"]
-}
-
-# Manage secrets at 'edu-secret'
-path "db/*" {
    capabilities = ["create", "read", "update", "delete", "list"]
 }
