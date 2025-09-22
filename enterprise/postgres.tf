@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 # Get the latest PostgreSQL image
 resource "docker_image" "postgres" {
   name = "postgres:latest"

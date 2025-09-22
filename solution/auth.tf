@@ -4,15 +4,15 @@
 #--------------------------------
 # Enable userpass auth method
 #--------------------------------
-resource "vault_auth_backend" "acc-userpass" {
+resource "vault_auth_backend" "acc_userpass" {
    namespace = vault_namespace.accounting.path
    type = "userpass"
 }
 
 # Create a user named, "bob"
-resource "vault_generic_endpoint" "acc-bob" {
+resource "vault_generic_endpoint" "acc_bob" {
   namespace = vault_namespace.accounting.path
-  depends_on           = [vault_auth_backend.acc-userpass]
+  depends_on           = [vault_auth_backend.acc_userpass]
   path                 = "auth/userpass/users/bob"
   ignore_absent_fields = true
 
@@ -25,6 +25,7 @@ resource "vault_generic_endpoint" "acc-bob" {
 EOT
 }
 
+# userpass for the edu namespace
 resource "vault_auth_backend" "edu-userpass" {
    namespace = vault_namespace.education.path
    type = "userpass"
