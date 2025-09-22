@@ -12,7 +12,7 @@ resource "vault_mount" "education_kvv2" {
   options   = { version = "2" }
 }
 
-resource "vault_kv_secret_v2" "education" {
+resource "vault_kv_secret_v2" "education_db_root" {
   namespace = vault_namespace.education.path
   mount     = vault_mount.education_kvv2.path
   name      = "pgx-root"
