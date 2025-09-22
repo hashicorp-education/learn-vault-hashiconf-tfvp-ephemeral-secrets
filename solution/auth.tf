@@ -41,7 +41,7 @@ resource "vault_generic_endpoint" "edu-bob" {
   data_json = <<EOT
 {
   "name": "Bob Smith",
-  "policies": ["accounting-admin"],
+  "policies": ["education-admin"],
   "password": "training"
 }
 EOT
